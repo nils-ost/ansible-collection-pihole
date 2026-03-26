@@ -1,0 +1,51 @@
+---
+- name: create compose directory
+  ansible.builtin.file:
+    path: "{{ pihole_compose_dir }}"
+    state: directory
+    mode: "0755"
+  register: compose_dir
+
+- name: write compose file
+  ansible.builtin.template:
+    src: templates/docker-compose.yml.j2
+    dest: "{{ [pihole_compose_dir, 'docker-compose.yml'] | path_join }}"
+    owner: root
+    group: root
+    mode: "0644"
+  register: compose_file
+
+- name: stop compose service
+  community.docker.docker_compose_v2:
+    project_src: "{{ pihole_compose_dir }}"
+    remove_orphans: true
+    state: stopped
+    timeout: 11
+  when: compose_file.changed and not compose_dir.changed
+
+- name: ensure systemd-resolved service is stopped and disabled (as it uses port 53)
+  ansible.builtin.systemd_service:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
+  failed_when: false
+
+- name: start compose service
+  community.docker.docker_compose_v2:
+    project_src: "{{ pihole_compose_dir }}"
+    remove_orphans: true
+    pull: "{{ pihole_auto_upgrade | ternary('always', 'missing') }}"
+    state: present
+    wait: true
+    wait_timeout: 40
+  register: compose_start
+
+- name: wait for pihole to be reachable
+  ansible.builtin.wait_for:
+    host: "{{ ansible_host }}"
+    port: "{{ pihole_port }}"
+    timeout: 30
+    connect_timeout: 2
+    sleep: 2
+    delay: 2
+  when: compose_start.changed

@@ -1,0 +1,6 @@
+---
+pihole_compose_dir: /opt/pihole
+pihole_auto_upgrade: false
+pihole_port: 80
+pihole_timezone: Europe/Berlin
+pihole_api_password: secret

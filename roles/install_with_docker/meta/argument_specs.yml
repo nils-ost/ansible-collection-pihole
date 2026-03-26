@@ -1,0 +1,32 @@
+argument_specs:
+  main:
+    short_description: installs BamBuddy within docker
+    description: a role for installing BamBuddy as a docker container with the help of compose
+    author:
+      - Nils Ost (@nils-ost)
+    version_added: 1.0.0
+    options:
+      bambuddy_compose_dir:
+        type: "str"
+        required: false
+        default: /opt/bambuddy
+      bambuddy_auto_upgrade:
+        type: "bool"
+        required: false
+        default: false
+      bambuddy_port:
+        type: "int"
+        required: false
+        default: 8000
+      bambuddy_timezone:
+        type: "str"
+        required: false
+        default: "Europe/Berlin"
+      bambuddy_user:
+        type: "str"
+        required: false
+        default: null
+      bambuddy_user_password:
+        type: "str"
+        required: false
+        default: null
