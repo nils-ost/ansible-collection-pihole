@@ -20,12 +20,17 @@ This collection has been tested against following PiHole versions: **\>=0.1.8.1*
 
 ## External requirements
 
-Currently only the `requests` Python library is required by this collection, to be able to run the modules.
-As this collection is intended to do it's module calls `delegate_to: localhost` it's enough to `pip install requests` locally.
+Currently only the `pihole6api` Python library is required by this collection, to be able to run the modules.
+As this collection is intended to do it's module calls `delegate_to: localhost` it's enough to `pip install pihole6api` locally.
 
 ## Included content
 
 <!--start collection content-->
+### Modules
+Name | Description
+--- | ---
+[nils_ost.pihole.config](https://github.com/nils-ost/ansible-collection-pihole/blob/main/docs/nils_ost.pihole.config_module.rst)|read or write PiHole config key
+[nils_ost.pihole.list](https://github.com/nils-ost/ansible-collection-pihole/blob/main/docs/nils_ost.pihole.list_module.rst)|lists all elements
 
 <!--end collection content-->
 

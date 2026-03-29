@@ -1,1 +1,1 @@
-requests
+pihole6api
