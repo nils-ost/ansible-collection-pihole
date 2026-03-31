@@ -1,0 +1,39 @@
+---
+- name: Pulling existing local_a_records
+  nils_ost.pihole.list:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    target: local_a_record
+  delegate_to: localhost
+  register: existing_records
+
+- name: Purging unconfigured local_a_records
+  sbarbett.pihole.local_a_record:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    state: absent
+    host: "{{ existing_record_item.host }}"
+    ip: "{{ existing_record_item.ip }}"
+  delegate_to: localhost
+
+  when: existing_record_item.host not in pihole_local_a_records
+
+  loop_control:
+    loop_var: existing_record_item
+    label: "{{ existing_record_item.host }}"
+  with_items: "{{ existing_records.data }}"
+
+- name: Creating local_a_records
+  sbarbett.pihole.local_a_record:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    state: present
+    host: "{{ record_item.key }}"
+    ip: "{{ record_item.value }}"
+  delegate_to: localhost
+
+  loop_control:
+    loop_var: record_item
+    label: "{{ record_item.key }} to {{ record_item.value }}"
+  with_dict: "{{ pihole_local_a_records }}"
+  register: created_records

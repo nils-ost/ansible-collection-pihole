@@ -111,7 +111,7 @@ def run_module():
         if module.params["target"] == "local_a_record":
             for parts in [e.split(None, 1) for e in r]:  # expected format: "ip host"
                 if len(parts) == 2 and parts[1] not in result["data"]:
-                    result["data"].append(parts[1])
+                    result["data"].append({"host": parts[1], "ip": parts[0]})
 
         module.exit_json(msg="fetching list successful", **result)
 

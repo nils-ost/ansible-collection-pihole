@@ -1,0 +1,20 @@
+---
+pihole_port: 80
+pihole_api_password: secret
+
+pihole_disable_logging: false
+pihole_max_api_sessions: 100 # don't set it too low, as this role can create a lot of sessions in short time
+pihole_upstream_servers:
+  - 208.67.222.222
+  - 208.67.220.220
+
+pihole_config:
+  dns/rateLimit:
+    count: 1000
+    interval: 60
+  dhcp/active: false
+
+pihole_local_a_records: {}
+
+# TODO: deny lists
+# TODO: ttl of local_a_records

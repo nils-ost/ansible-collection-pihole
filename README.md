@@ -20,8 +20,17 @@ This collection has been tested against following PiHole versions: **\>=0.1.8.1*
 
 ## External requirements
 
-Currently only the `pihole6api` Python library is required by this collection, to be able to run the modules.
-As this collection is intended to do it's module calls `delegate_to: localhost` it's enough to `pip install pihole6api` locally.
+  * python:
+    * pihole6api *>=0.2.0*
+  * collections:
+    * sbarbett.pihole *>=1.1.2*
+
+As this collection is intended to do it's dependend module calls `delegate_to: localhost` it's enough to apply the following installs on the ansible-controller.
+
+```
+pip install pihole6api
+ansible-galaxy collection install sbarbett.pihole
+```
 
 ## Included content
 
@@ -39,7 +48,7 @@ Name | Description
 Name | Description
 --- | ---
 [nils_ost.pihole.install_with_docker](https://github.com/nils-ost/ansible-collection-pihole/blob/main/roles/install_with_docker/README.md)|installs PiHole within docker
-[nils_ost.pihole.basic_config](https://github.com/nils-ost/ansible-collection-pihole/blob/main/roles/basic_config/README.md)|configures PiHole with basic capabilities
+[nils_ost.pihole.configure](https://github.com/nils-ost/ansible-collection-pihole/blob/main/roles/configure/README.md)|configures basic PiHole features
 
 ## Using this collection
 

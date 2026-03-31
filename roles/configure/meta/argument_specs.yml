@@ -1,0 +1,40 @@
+argument_specs:
+  main:
+    short_description: configures basic PiHole features
+    description:
+      - configures PiHole with some basic / most common features
+      - requires already running PiHole (e.g. through role ``install_with_docker``)
+    author:
+      - Nils Ost (@nils-ost)
+    version_added: 1.0.0
+    options:
+      pihole_port:
+        type: "int"
+        required: false
+        default: 80
+      pihole_api_password:
+        type: "str"
+        required: false
+        default: secret
+      pihole_disable_logging:
+        type: "bool"
+        required: false
+        default: false
+      pihole_max_api_sessions:
+        type: "int"
+        required: false
+        default: 100
+      pihole_upstream_servers:
+        type: "list"
+        required: false
+        # no deeper validation possible at this point due to limited notation
+        # items are validated in criteria/pihole_upstream_servers.json
+      pihole_config:
+        type: "dict"
+        required: false
+        # no deeper validation possible due to complex possibilities
+      pihole_local_a_records:
+        type: "dict"
+        required: false
+        # no deeper validation possible at this point due to limited notation
+        # options are validated in criteria/pihole_local_a_records.json

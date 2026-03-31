@@ -33,13 +33,16 @@ tags:
   - dns
   - dhcp
   - filter
+  - local_a_record
   - blocklist
+  - docker
 
 # Collections that this collection requires to be installed for it to be usable. The key of the dict is the
 # collection label 'namespace.name'. The value is a version range
 # L(specifiers,https://python-semanticversion.readthedocs.io/en/latest/#requirement-specification). Multiple version
 # range specifiers can be set and are separated by ','
-dependencies: {}
+dependencies:
+  sbarbett.pihole: ">=1.1.2"
 
 # The URL of the originating SCM repository
 repository: https://github.com/nils-ost/ansible-collection-pihole

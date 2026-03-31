@@ -1,0 +1,61 @@
+---
+# Validating variables(parts) that can't be validated via argument_specs
+- name: Validate pihole_upstream_servers config
+  ansible.utils.validate:
+    data: "{{ pihole_upstream_servers }}"
+    criteria:
+      - "{{ lookup('file',  '../criteria/pihole_upstream_servers.json') | from_json }}"
+    engine: ansible.utils.jsonschema
+  when: pihole_upstream_servers | length > 0
+
+- name: Validate pihole_local_a_records config
+  ansible.utils.validate:
+    data: "{{ pihole_local_a_records }}"
+    criteria:
+      - "{{ lookup('file',  '../criteria/pihole_local_a_records.json') | from_json }}"
+    engine: ansible.utils.jsonschema
+  when: pihole_local_a_records.keys() | length > 0
+
+# Start of execution
+- name: set pihole max API sessions
+  nils_ost.pihole.config:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    key: webserver/api/max_sessions
+    value: "{{ pihole_max_api_sessions }}"
+    action: write
+  delegate_to: localhost
+
+- name: set pihole logging to {{ not pihole_disable_logging }}
+  nils_ost.pihole.config:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    key: dns/queryLogging
+    value: "{{ not pihole_disable_logging | bool }}"
+    action: write
+  delegate_to: localhost
+
+- name: set pihole upstream server(s)
+  nils_ost.pihole.config:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    key: dns/upstreams
+    value: "{{ pihole_upstream_servers }}"
+    action: write
+  delegate_to: localhost
+
+- name: update pihole config
+  nils_ost.pihole.config:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+    action: write
+  delegate_to: localhost
+  loop: "{{ pihole_config | dict2items }}"
+  loop_control:
+    label: "set {{ item.key }} to {{ item.value }}"
+
+- name: include local_a_record management
+  include_tasks: local_a_record.yml
+  when: pihole_local_a_records.keys() | length > 0

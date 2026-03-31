@@ -1,0 +1,16 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: configure
+  author: Nils Ost (@nils-ost)
+  description: configures basic PiHole features
+  license: GPL-3.0-or-later
+  min_ansible_version: 2.13.9
+  galaxy_tags:
+    - pihole
+    - dns
+    - dhcp
+    - filter
+    - local_a_record
+    - blocklist

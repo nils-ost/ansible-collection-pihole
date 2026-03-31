@@ -1,0 +1,8 @@
+{
+  "type": "array",
+  "items": {
+    "type": "string",
+    "pattern": "^(((?!25?[6-9])[12]\\d|[1-9])?\\d\\.?\\b){4}$",
+    "description": "Needs to be an valid IP"
+  }
+}
