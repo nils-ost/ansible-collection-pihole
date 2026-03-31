@@ -21,15 +21,16 @@ configures PiHole with some basic / most common features. requires already runni
 
 ## Role Variables
 
-| Variable                | Type | Default      | Comment                                                      |
-| ----------------------- | ---- | ------------ | ------------------------------------------------------------ |
-| pihole_port             | int  | 80           | port to be used for web and API communication                |
-| pihole_api_password     | str  | secret       | password configured for login (only applys on initial run)   |
-| pihole_disable_logging  | bool | false        | disables DNS-Query logging                                   |
-| pihole_max_api_sessions | int  | 100          | set the maximum concurrent API sessions allowed (see note)   |
-| pihole_upstream_servers | list | <see below\> | list of upstream DNS servers to be used                      |
-| pihole_config           | dict | <see below\> | holds additional configuration parameters (see below)        |
-| pihole_local_a_records  | dict | {}           | DNS A records to be resolved locally on instance (see below) |
+| Variable                | Type | Default      | Comment                                                                                   |
+| ----------------------- | ---- | ------------ | ----------------------------------------------------------------------------------------- |
+| pihole_port             | int  | 80           | port to be used for web and API communication                                             |
+| pihole_api_password     | str  | secret       | password configured for login (only applys on initial run)                                |
+| pihole_disable_logging  | bool | false        | disables DNS-Query logging                                                                |
+| pihole_max_api_sessions | int  | 100          | set the maximum concurrent API sessions allowed (see note)                                |
+| pihole_local_record_ttl | int  | null         | sets the ttl for `local_a_records` (in seconds), if `null` the line is cleard from config |
+| pihole_upstream_servers | list | <see below\> | list of upstream DNS servers to be used                                                   |
+| pihole_config           | dict | <see below\> | holds additional configuration parameters (see below)                                     |
+| pihole_local_a_records  | dict | {}           | DNS A records to be resolved locally on instance (see below)                              |
 
 > [!NOTE]
 > don't set `pihole_max_api_sessions` too low, as this role can create a lot of sessions in short time, that might be exceeded otherwise

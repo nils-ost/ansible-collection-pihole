@@ -24,6 +24,10 @@ argument_specs:
         type: "int"
         required: false
         default: 100
+      pihole_local_record_ttl:
+        type: int
+        required: false
+        default: null
       pihole_upstream_servers:
         type: "list"
         required: false

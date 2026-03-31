@@ -44,6 +44,27 @@
     action: write
   delegate_to: localhost
 
+- name: set pihole local record ttl to {{ pihole_local_record_ttl }}
+  nils_ost.pihole.config:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    key: misc/dnsmasq_lines
+    value:
+      - "local-ttl={{ pihole_local_record_ttl }}"
+    action: write
+  delegate_to: localhost
+  when: pihole_local_record_ttl | ternary(True, False)
+
+- name: clear pihole local record ttl
+  nils_ost.pihole.config:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    key: misc/dnsmasq_lines
+    value: []
+    action: write
+  delegate_to: localhost
+  when: pihole_local_record_ttl | ternary(False, True)
+
 - name: update pihole config
   nils_ost.pihole.config:
     url: "http://{{ ansible_host }}:{{ pihole_port }}"
