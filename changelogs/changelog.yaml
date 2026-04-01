@@ -1,0 +1,30 @@
+ancestor: null
+releases:
+  1.0.0:
+    changes:
+      release_summary:
+        "This is the first proper release of ``nils_ost.pihole`` collection
+        on 2026-04-01.
+
+        It's mainly a carryover from other projects with some slight improvements."
+    fragments:
+      - v1.0.0.yml
+    modules:
+      - description: read or write PiHole config key.
+        name: config
+        namespace: ""
+      - description: manage domain deny or allow.
+        name: domain
+        namespace: ""
+      - description: lists all elements.
+        name: list
+        namespace: ""
+    objects:
+      role:
+        - description: configures basic PiHole features.
+          name: configure
+          namespace: null
+        - description: installs PiHole within docker.
+          name: install_with_docker
+          namespace: null
+    release_date: "2026-04-01"

@@ -50,7 +50,8 @@ antsibull-changelog lint
 
 ```
 release_summary: |
-  This is the first proper release of ``nils_ost.pihole`` collection on 2026-03-26.
+  This is the first proper release of ``nils_ost.pihole`` collection on 2026-04-01.
+  It's mainly a carryover from other projects with some slight improvements.
 ```
 
 ## setup to push to ansible-galaxy

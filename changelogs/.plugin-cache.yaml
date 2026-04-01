@@ -1,0 +1,42 @@
+objects:
+  role:
+    configure:
+      description: configures basic PiHole features
+      name: configure
+      version_added: 1.0.0
+    install_with_docker:
+      description: installs PiHole within docker
+      name: install_with_docker
+      version_added: 1.0.0
+plugins:
+  become: {}
+  cache: {}
+  callback: {}
+  cliconf: {}
+  connection: {}
+  filter: {}
+  httpapi: {}
+  inventory: {}
+  lookup: {}
+  module:
+    config:
+      description: read or write PiHole config key
+      name: config
+      namespace: ""
+      version_added: 1.0.0
+    domain:
+      description: manage domain deny or allow
+      name: domain
+      namespace: ""
+      version_added: 1.0.0
+    list:
+      description: lists all elements
+      name: list
+      namespace: ""
+      version_added: 1.0.0
+  netconf: {}
+  shell: {}
+  strategy: {}
+  test: {}
+  vars: {}
+version: 1.0.0
