@@ -42,3 +42,8 @@ argument_specs:
         required: false
         # no deeper validation possible at this point due to limited notation
         # options are validated in criteria/pihole_local_a_records.json
+      pihole_domains:
+        type: "dict"
+        required: false
+        # no deeper validation possible at this point due to limited notation
+        # options are validated in criteria/pihole_domains.json

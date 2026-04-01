@@ -39,6 +39,7 @@ ansible-galaxy collection install sbarbett.pihole
 Name | Description
 --- | ---
 [nils_ost.pihole.config](https://github.com/nils-ost/ansible-collection-pihole/blob/main/docs/nils_ost.pihole.config_module.rst)|read or write PiHole config key
+[nils_ost.pihole.domain](https://github.com/nils-ost/ansible-collection-pihole/blob/main/docs/nils_ost.pihole.domain_module.rst)|manage domain deny or allow
 [nils_ost.pihole.list](https://github.com/nils-ost/ansible-collection-pihole/blob/main/docs/nils_ost.pihole.list_module.rst)|lists all elements
 
 <!--end collection content-->

@@ -34,7 +34,9 @@ tags:
   - dhcp
   - filter
   - local_a_record
-  - blocklist
+  - denylist
+  - allowlist
+  - ttl
   - docker
 
 # Collections that this collection requires to be installed for it to be usable. The key of the dict is the

@@ -1,0 +1,36 @@
+---
+- name: Pulling existing domains
+  nils_ost.pihole.list:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    target: domain
+  delegate_to: localhost
+  register: existing_domains
+
+- name: Purging unconfigured domains
+  nils_ost.pihole.domain:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    list: remove
+    domain: "{{ domain_item.domain }}"
+  delegate_to: localhost
+
+  when: domain_item.domain not in pihole_domains
+
+  loop_control:
+    loop_var: domain_item
+    label: "{{ domain_item.domain }}"
+  with_items: "{{ existing_domains.data }}"
+
+- name: Creating domains
+  nils_ost.pihole.domain:
+    url: "http://{{ ansible_host }}:{{ pihole_port }}"
+    password: "{{ pihole_api_password }}"
+    domain: "{{ domain_item.key }}"
+    list: "{{ domain_item.value }}"
+  delegate_to: localhost
+
+  loop_control:
+    loop_var: domain_item
+    label: "{{ domain_item.key }} to {{ domain_item.value }}"
+  with_dict: "{{ pihole_domains }}"

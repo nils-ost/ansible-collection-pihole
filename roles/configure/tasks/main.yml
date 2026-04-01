@@ -16,6 +16,14 @@
     engine: ansible.utils.jsonschema
   when: pihole_local_a_records.keys() | length > 0
 
+- name: Validate pihole_domains config
+  ansible.utils.validate:
+    data: "{{ pihole_domains }}"
+    criteria:
+      - "{{ lookup('file',  '../criteria/pihole_domains.json') | from_json }}"
+    engine: ansible.utils.jsonschema
+  when: pihole_domains.keys() | length > 0
+
 # Start of execution
 - name: set pihole max API sessions
   nils_ost.pihole.config:
@@ -78,5 +86,7 @@
     label: "set {{ item.key }} to {{ item.value }}"
 
 - name: include local_a_record management
-  include_tasks: local_a_record.yml
-  when: pihole_local_a_records.keys() | length > 0
+  include_tasks: local_a_records.yml
+
+- name: include domain management
+  include_tasks: domains.yml

@@ -17,4 +17,4 @@ pihole_config:
 
 pihole_local_a_records: {}
 
-# TODO: deny lists
+pihole_domains: {}

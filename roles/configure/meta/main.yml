@@ -13,4 +13,6 @@ galaxy_info:
     - dhcp
     - filter
     - local_a_record
-    - blocklist
+    - denylist
+    - allowlist
+    - ttl

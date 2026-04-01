@@ -12,6 +12,8 @@ Version added: 1.0.0
     - [Example (default value)](#example-default-value-1)
   - [Structure of: pihole\_local\_a\_records](#structure-of-pihole_local_a_records)
     - [Example](#example)
+  - [Structure of: pihole\_domains](#structure-of-pihole_domains)
+    - [Example](#example-1)
 
 
 ## Synopsis
@@ -31,6 +33,7 @@ configures PiHole with some basic / most common features. requires already runni
 | pihole_upstream_servers | list | <see below\> | list of upstream DNS servers to be used                                                   |
 | pihole_config           | dict | <see below\> | holds additional configuration parameters (see below)                                     |
 | pihole_local_a_records  | dict | {}           | DNS A records to be resolved locally on instance (see below)                              |
+| pihole_domains          | dict | {}           | Domains explicitly allowed or denyed to be resloved (see below)                           |
 
 > [!NOTE]
 > don't set `pihole_max_api_sessions` too low, as this role can create a lot of sessions in short time, that might be exceeded otherwise
@@ -79,4 +82,17 @@ pihole_local_a_records:
   router.local.domain: 192.168.0.1
   pihole.local.domain: 192.168.0.2
   host1.local.domain: 192.168.0.55
+```
+
+### Structure of: pihole_domains
+
+This dict contains a the information to which list (deny or allow) DNS names (FQDN) should be added to. FQDNs configured this way are always (allow) or never (deny) resolved by PiHole.
+
+#### Example
+
+```yaml
+pihole_domain:
+  test1.local: deny
+  test2.local: allow
+  test3.local: deny
 ```

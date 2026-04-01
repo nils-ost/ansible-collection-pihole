@@ -1,11 +1,11 @@
-.. _nils_ost.pihole.list_module:
+.. _nils_ost.pihole.domain_module:
 
 
-********************
-nils_ost.pihole.list
-********************
+**********************
+nils_ost.pihole.domain
+**********************
 
-**lists all elements**
+**manage domain deny or allow**
 
 
 Version added: 1.0.0
@@ -17,7 +17,8 @@ Version added: 1.0.0
 
 Synopsis
 --------
-- Fetches a list of all existing elements from type target
+- module that is capable of adding or removing domains to and from block- and whitelists
+- always creates entrys with exact match and without group assignment
 
 
 
@@ -36,6 +37,42 @@ Parameters
             <tr>
                 <td colspan="1">
                     <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>domain</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">string</span>
+                         / <span style="color: red">required</span>
+                    </div>
+                </td>
+                <td>
+                </td>
+                <td>
+                        <div>domain to manage</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
+                    <b>list</b>
+                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
+                    <div style="font-size: small">
+                        <span style="color: purple">string</span>
+                    </div>
+                </td>
+                <td>
+                        <ul style="margin: 0; padding: 0"><b>Choices:</b>
+                                    <li><div style="color: blue"><b>deny</b>&nbsp;&larr;</div></li>
+                                    <li>allow</li>
+                                    <li>remove</li>
+                        </ul>
+                </td>
+                <td>
+                        <div>list domain should be added to (or removed from either)</div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1">
+                    <div class="ansibleOptionAnchor" id="parameter-"></div>
                     <b>password</b>
                     <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
                     <div style="font-size: small">
@@ -47,25 +84,6 @@ Parameters
                 </td>
                 <td>
                         <div>password to authenticate on PiHole instance</div>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="1">
-                    <div class="ansibleOptionAnchor" id="parameter-"></div>
-                    <b>target</b>
-                    <a class="ansibleOptionLink" href="#parameter-" title="Permalink to this option"></a>
-                    <div style="font-size: small">
-                        <span style="color: purple">string</span>
-                    </div>
-                </td>
-                <td>
-                        <ul style="margin: 0; padding: 0"><b>Choices:</b>
-                                    <li><div style="color: blue"><b>local_a_record</b>&nbsp;&larr;</div></li>
-                                    <li>domain</li>
-                        </ul>
-                </td>
-                <td>
-                        <div>element type to get list of</div>
                 </td>
             </tr>
             <tr>
@@ -95,46 +113,34 @@ Examples
 
 .. code-block:: yaml
 
-    # fetches all existing local_a_records (domain names)
-    - name: Pulling existing local_a_record
-      nils_ost.pihole.list:
+    # creates domain test3.local on deny list
+    - name: create doamin
+      nils_ost.pihole.domain:
         url: http://pihole.local
         password: somethingsecret
-        target: local_a_record
+        domain: test3.local
+        list: deny
       delegate_to: localhost
-      register: existing_local_a_record
+
+    # updates domain test3.local to allow list
+    - name: create doamin
+      nils_ost.pihole.domain:
+        url: http://pihole.local
+        password: somethingsecret
+        domain: test3.local
+        list: allow
+      delegate_to: localhost
+
+    # deletes domain test3.local from either list
+    - name: create doamin
+      nils_ost.pihole.domain:
+        url: http://pihole.local
+        password: somethingsecret
+        domain: test3.local
+        list: remove
+      delegate_to: localhost
 
 
-
-Return Values
--------------
-Common return values are documented `here <https://docs.ansible.com/ansible/latest/reference_appendices/common_return_values.html#common-return-values>`_, the following are the fields unique to this module:
-
-.. raw:: html
-
-    <table border=0 cellpadding=0 class="documentation-table">
-        <tr>
-            <th colspan="1">Key</th>
-            <th>Returned</th>
-            <th width="100%">Description</th>
-        </tr>
-            <tr>
-                <td colspan="1">
-                    <div class="ansibleOptionAnchor" id="return-"></div>
-                    <b>data</b>
-                    <a class="ansibleOptionLink" href="#return-" title="Permalink to this return value"></a>
-                    <div style="font-size: small">
-                      <span style="color: purple">list</span>
-                    </div>
-                </td>
-                <td>always</td>
-                <td>
-                            <div>list of existing elements of type target</div>
-                    <br/>
-                </td>
-            </tr>
-    </table>
-    <br/><br/>
 
 
 Status

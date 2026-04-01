@@ -40,7 +40,7 @@ options:
         required: false
         type: str
         default: "local_a_record"
-        choices: ["local_a_record"]
+        choices: ["local_a_record", "domain"]
 """
 
 EXAMPLES = r"""
@@ -72,7 +72,7 @@ def run_module():
             type="str",
             required=False,
             default="local_a_record",
-            choices=["local_a_record"],
+            choices=["local_a_record", "domain"],
         ),
     )
 
@@ -100,18 +100,27 @@ def run_module():
 
         if module.params["target"] == "local_a_record":
             key = "dns/hosts"
+            r = c.config.get_config(key)
+            r = r["config"]
+            for e in key.split("/"):
+                r = r[e]
+
+            if module.params["target"] == "local_a_record":
+                for parts in [
+                    e.split(None, 1) for e in r
+                ]:  # expected format: "ip host"
+                    if len(parts) == 2 and parts[1] not in result["data"]:
+                        result["data"].append({"host": parts[1], "ip": parts[0]})
+
+        elif module.params["target"] == "domain":
+            r = c.domain_management.get_all_domains()
+            for d in r.get("whitelist", dict()).get("domains", list()):
+                result["data"].append(d)
+            for d in r.get("blacklist", dict()).get("domains", list()):
+                result["data"].append(d)
+
         else:
             module.fail_json(msg="invalid target", **result)
-
-        r = c.config.get_config(key)
-        r = r["config"]
-        for e in key.split("/"):
-            r = r[e]
-
-        if module.params["target"] == "local_a_record":
-            for parts in [e.split(None, 1) for e in r]:  # expected format: "ip host"
-                if len(parts) == 2 and parts[1] not in result["data"]:
-                    result["data"].append({"host": parts[1], "ip": parts[0]})
 
         module.exit_json(msg="fetching list successful", **result)
 
