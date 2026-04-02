@@ -21,6 +21,7 @@ This collection has been tested against following PiHole versions: **\>=0.1.8.1*
 ## External requirements
 
   * python:
+    * jsonschema *>=4.26.0*
     * pihole6api *>=0.2.0*
   * collections:
     * sbarbett.pihole *>=1.1.2*
@@ -28,7 +29,7 @@ This collection has been tested against following PiHole versions: **\>=0.1.8.1*
 As this collection is intended to do it's dependend module calls `delegate_to: localhost` it's enough to apply the following installs on the ansible-controller.
 
 ```
-pip install pihole6api
+pip install jsonschema pihole6api
 ansible-galaxy collection install sbarbett.pihole
 ```
 
